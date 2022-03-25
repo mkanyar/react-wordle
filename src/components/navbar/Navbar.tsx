@@ -3,6 +3,7 @@ import {
   CogIcon,
   InformationCircleIcon,
 } from '@heroicons/react/outline'
+
 import logo from '../../images/logo-2.jpg'
 // import logo from '../../images/logo-1.jpg'
 
