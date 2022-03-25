@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/outline'
 
 import logo from '../../images/logo-2.jpg'
-//  import logo from '../../images/logo-1.jpg'
+// import logo from '../../images/logo-1.jpg'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void
