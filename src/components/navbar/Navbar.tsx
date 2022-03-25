@@ -4,6 +4,8 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/outline'
 import { GAME_TITLE } from '../../constants/strings'
+import logo from '../../images/logo-2.jpg'
+// import logo from '../../images/logo-1.jpg'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void
@@ -24,7 +26,7 @@ export const Navbar = ({
           onClick={() => setIsInfoModalOpen(true)}
         />
         <p className="text-3xl ml-2.5 font-bold dark:text-white">
-          {GAME_TITLE}
+          <img src={logo} />
         </p>
         <div className="right-icons">
           <ChartBarIcon
