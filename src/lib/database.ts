@@ -3,27 +3,27 @@ import axios from 'axios'
 import { MISSING_WORDS_ENDPOINT, GAMES_ENDPOINT } from '../constants/endpoints'
 import { loadGameStateFromLocalStorage } from './localStorage'
 
-type CompletedGame = {
+type CompletedGamePayload = {
   guesses: string[]
   solution: string
-  isWin: boolean
-  startTime: number
-  endTime: number
-  timeTakenInSeconds: number
+  is_win: boolean
+  start_time: Date
+  end_time: Date
+  time_taken: number
 }
 
 export const saveGameStateToDatabase = (isWin: boolean) => {
   const game = loadGameStateFromLocalStorage()
-  const endTime = new Date().getTime()
-  const startTime = Date.parse(localStorage.getItem('startTime') as string)
+  const endTime = new Date()
+  const startTime = new Date(localStorage.getItem('startTime') as string)
   const completedGame = {
     guesses: game && game.guesses,
     solution: game && game.solution,
-    isWin,
-    startTime,
-    endTime,
-    timeTakenInSeconds: (endTime - startTime) / 1000,
-  } as CompletedGame
+    is_win: isWin,
+    start_time: startTime,
+    end_time: endTime,
+    time_taken: (endTime.getTime() - startTime.getTime()) / 1000,
+  } as CompletedGamePayload
 
   if (!localStorage.getItem('saved')) {
     axios

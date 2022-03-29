@@ -73,6 +73,7 @@ function App() {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       localStorage.removeItem('saved')
+      localStorage.setItem('startTime', new Date().toISOString())
       return []
     }
     const gameWasWon = loaded.guesses.includes(solution)
