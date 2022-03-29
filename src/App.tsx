@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
 import { InfoModal } from './components/modals/InfoModal'
@@ -10,7 +9,6 @@ import {
   GAME_COPIED_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
-  REACT_APP_BACKEND_ENDPOINT,
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE,
 } from './constants/strings'
@@ -35,6 +33,10 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
+import {
+  saveCurrentGuessToDatabase,
+  saveGameStateToDatabase,
+} from './lib/database'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 
 import './App.css'
@@ -70,6 +72,7 @@ function App() {
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
+      localStorage.removeItem('saved')
       return []
     }
     const gameWasWon = loaded.guesses.includes(solution)
@@ -81,6 +84,9 @@ function App() {
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
       })
+    }
+    if (!localStorage.getItem('startTime')) {
+      localStorage.setItem('startTime', new Date().toISOString())
     }
     return loaded.guesses
   })
@@ -154,12 +160,16 @@ function App() {
         delayMs,
         onClose: () => setIsStatsModalOpen(true),
       })
+      const isWin = true
+      saveGameStateToDatabase(isWin)
     }
 
     if (isGameLost) {
       setTimeout(() => {
         setIsStatsModalOpen(true)
       }, GAME_LOST_INFO_DELAY)
+      const isWin = false
+      saveGameStateToDatabase(isWin)
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
@@ -200,13 +210,8 @@ function App() {
 
     if (!isWordInWordList(currentGuess)) {
       setCurrentRowClass('jiggle')
-
-      axios.post(REACT_APP_BACKEND_ENDPOINT, {
-        word: { value: currentGuess.toLowerCase() },
-      })
-
+      saveCurrentGuessToDatabase(currentGuess)
       vibrate()
-
       return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
         onClose: clearCurrentRowClass,
       })

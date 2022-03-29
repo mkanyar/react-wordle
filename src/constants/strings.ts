@@ -30,8 +30,3 @@ export const BEST_STREAK_TEXT = 'Iminsi myinshi watsinze wikurikiranya'
 export const HARD_MODE_DESCRIPTION =
   'Indome zose weretswe zitegerezwa gukoreshwa mu majambo akurikira'
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'Kugira bisomeke neza uri ku zuba'
-
-export const REACT_APP_BACKEND_ENDPOINT =
-  process.env.NODE_ENV === 'production'
-    ? 'https://burundiarxiv-api.herokuapp.com/api/v1/missing_words'
-    : 'http://localhost:3001/api/v1/missing_words'
