@@ -4,4 +4,4 @@ const ROOT_URL =
   process.env.NODE_ENV === 'production' ? PRODUCTION_URL : DEVELOPMENT_URL
 
 export const MISSING_WORDS_ENDPOINT = `${ROOT_URL}/missing_words`
-export const GAMES_ENDPOINT = `${ROOT_URL}/game_states`
+export const GAMES_ENDPOINT = `${ROOT_URL}/games`
