@@ -711,6 +711,7 @@ export const VALID_GUESSES = [
   'ibowa',
   'ibuha',
   'ibuka',
+  'urote',
   'jamwo',
   'kuvyo',
   'ibura',
