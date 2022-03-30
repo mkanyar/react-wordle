@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import dayjs from 'dayjs'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
 import { InfoModal } from './components/modals/InfoModal'
@@ -73,7 +74,11 @@ function App() {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       localStorage.removeItem('saved')
-      localStorage.setItem('startTime', new Date().toISOString())
+      // localStorage.setItem('startTime', new Date().toISOString())
+      localStorage.setItem(
+        'startTime',
+        dayjs().format('YYYY-MM-DDTHH:mm:ssZ[Z]')
+      )
       return []
     }
     const gameWasWon = loaded.guesses.includes(solution)
@@ -87,7 +92,10 @@ function App() {
       })
     }
     if (!localStorage.getItem('startTime')) {
-      localStorage.setItem('startTime', new Date().toISOString())
+      localStorage.setItem(
+        'startTime',
+        dayjs().format('YYYY-MM-DDTHH:mm:ssZ[Z]')
+      )
     }
     return loaded.guesses
   })
