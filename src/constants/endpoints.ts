@@ -5,3 +5,4 @@ const ROOT_URL =
 
 export const MISSING_WORDS_ENDPOINT = `${ROOT_URL}/missing_words`
 export const GAMES_ENDPOINT = `${ROOT_URL}/games`
+export const COUNTRY_ENDPOINT = 'https://ipapi.co/json/'

@@ -1,39 +1,43 @@
 import axios from 'axios'
 
-import { MISSING_WORDS_ENDPOINT, GAMES_ENDPOINT } from '../constants/endpoints'
+import {
+  COUNTRY_ENDPOINT,
+  GAMES_ENDPOINT,
+  MISSING_WORDS_ENDPOINT,
+} from '../constants/endpoints'
 import { loadGameStateFromLocalStorage } from './localStorage'
 
 type CompletedGamePayload = {
   guesses: string[]
   solution: string
-  is_win: boolean
+  won: boolean
   start_time: Date
   end_time: Date
   time_taken: number
+  country: string
 }
 
-export const saveGameStateToDatabase = (isWin: boolean) => {
+export const saveGameStateToDatabase = (won: boolean) => {
   const game = loadGameStateFromLocalStorage()
   const endTime = new Date()
   const startTime = new Date(localStorage.getItem('startTime') as string)
   const completedGame = {
     guesses: game && game.guesses,
     solution: game && game.solution,
-    is_win: isWin,
+    won: won,
     start_time: startTime,
     end_time: endTime,
-    time_taken: (endTime.getTime() - startTime.getTime()) / 1000,
+    time_taken: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
   } as CompletedGamePayload
 
   if (!localStorage.getItem('saved')) {
-    axios
-      .post(GAMES_ENDPOINT, {
-        game: completedGame,
-      })
-      .then(() => {
+    axios.get(COUNTRY_ENDPOINT).then((res) => {
+      completedGame.country = res.data.country_name
+      axios.post(GAMES_ENDPOINT, completedGame).then(() => {
         localStorage.setItem('saved', 'true')
         localStorage.removeItem('startTime')
       })
+    })
   }
 }
 
