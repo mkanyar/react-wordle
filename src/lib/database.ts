@@ -17,7 +17,6 @@ type CompletedGamePayload = {
   country: string
   timezone: string
 }
-const customParseFormat = require('dayjs/plugin/customParseFormat')
 
 export const saveGameStateToDatabase = (won: boolean) => {
   const game = loadGameStateFromLocalStorage()
