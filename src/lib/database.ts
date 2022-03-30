@@ -1,5 +1,4 @@
 import axios from 'axios'
-import dayjs from 'dayjs'
 
 import {
   COUNTRY_ENDPOINT,
@@ -12,51 +11,37 @@ type CompletedGamePayload = {
   guesses: string[]
   solution: string
   won: boolean
-  start_time: string
-  end_time: string
+  start_time: Date
+  end_time: Date
   time_taken: number
   country: string
+  timezone: string
 }
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 
 export const saveGameStateToDatabase = (won: boolean) => {
   const game = loadGameStateFromLocalStorage()
-  // const endTime = new Date()
-  const endTime = dayjs() //.format('YYYY-MM-DDTHH:mm:ssZ[Z]')
-  // const startTime = new Date(localStorage.getItem('startTime') as string)
-  // const startTime = dayjs(localStorage.getItem('startTime') as string)
-  // const startTime = dayjs(
-  //   localStorage.getItem('startTime') as string,
-  //   ['YYYY-MM-DDTHH:mm:ssZ[Z]'],
-  //   true
-  // )
-  dayjs.extend(customParseFormat)
-  console.log(localStorage.getItem('startTime') as string)
-  // 2022-03-30T15:19:30+02:00Z
-  // const startTime = dayjs('2018-04-04T16:00:00.000Z')
-  const startTime = dayjs(
-    localStorage.getItem('startTime') as string,
-    'YYYY-MM-DDTHH:mm:ssZ[Z]'
-  )
+  const endTime = new Date()
+  const startTime = new Date(localStorage.getItem('startTime') as string)
   const completedGame = {
     guesses: game && game.guesses,
     solution: game && game.solution,
     won: won,
-    start_time: startTime.format('YYYY-MM-DDTHH:mm:ssZ[Z]'),
-    end_time: endTime.format('YYYY-MM-DDTHH:mm:ssZ[Z]'),
-    // time_taken: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
-    time_taken: endTime.diff(startTime, 'second'),
+    start_time: startTime,
+    end_time: endTime,
+    time_taken: (endTime.getTime() - startTime.getTime()) / 1000,
   } as CompletedGamePayload
 
-  // if (!localStorage.getItem('saved')) {
-  axios.get(COUNTRY_ENDPOINT).then((res) => {
-    completedGame.country = res.data.country_name
-    axios.post(GAMES_ENDPOINT, completedGame).then(() => {
-      localStorage.setItem('saved', 'true')
-      localStorage.removeItem('startTime')
+  if (!localStorage.getItem('saved')) {
+    axios.get(COUNTRY_ENDPOINT).then(({ data: { country_name, timezone } }) => {
+      completedGame.country = country_name
+      completedGame.timezone = timezone
+      axios.post(GAMES_ENDPOINT, completedGame).then(() => {
+        localStorage.setItem('saved', 'true')
+        localStorage.removeItem('startTime')
+      })
     })
-  })
-  // }
+  }
 }
 
 export const saveCurrentGuessToDatabase = (currentGuess: string) => {
