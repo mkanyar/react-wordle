@@ -16,14 +16,19 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       isOpen={isOpen}
       handleClose={handleClose}
     >
-      <p className="text-sm text-gray-500 dark:text-gray-300">
-        Tora ijambo ryinyegeje. Ushobora kugerageza incuro 6. Uko ukina, amabara
-        y'indome araza guhinduka. Ayo mabara aza kukwereka ko uriko uregereza
-        gutora ijambo ryinyegeje.
-      </p>
-      <p className="mt-4 font-bold text-sm text-gray-500 dark:text-gray-300">
-        Akarorero :
-      </p>
+      <div>
+        <p className="text-sm text-gray-500 dark:text-gray-300">
+          Tora ijambo ryinyegeje. Ushobora kugerageza incuro 6. Uko ukina,
+          amabara y'indome araza guhinduka. Ayo mabara aza kukwereka ko uriko
+          uregereza gutora ijambo ryinyegeje.
+        </p>
+      </div>
+
+      <div>
+        <p className="mt-4 font-bold text-sm text-gray-500 dark:text-gray-300">
+          Akarorero :
+        </p>
+      </div>
 
       <div className="flex justify-center mb-1 mt-2">
         <Cell
@@ -79,33 +84,33 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
           className="underline font-bold"
           text="Fyonda hano"
         />
-        <p className="mt-6 italic text-s text-gray-500 dark:text-gray-300">
-          Muri runo rukino, harimwo amajambo{' '}
-          <span className="font-bold">
-            {WORDS.concat(VALID_GUESSES).length}
-          </span>{' '}
-          gusa.
-        </p>
-        <p className="mt-4 italic text-s text-gray-500 dark:text-gray-300">
-          <span className="font-bold">Ijambo</span> ryinyegeje ni rimwe umunsi
-          wose. Rihinduka isaha 12 zo mw'ijoro.
-        </p>
-        <p className="mt-4 italic text-xs text-gray-500 dark:text-gray-300">
-          Abafashije gutegura runo rukino bari{' '}
-          <Link
-            href="https://github.com/lionel-k/react-wordle#contributors"
-            className="underline font-bold"
-            text="hano"
-          />
-        </p>
-        <p className="mt-4 italic text-xs text-gray-500 dark:text-gray-300">
-          Code yamfashije gukora runo rukino{' '}
-          <Link
-            href="https://github.com/cwackerfuss/react-wordle"
-            className="underline font-bold"
-            text="yirabe ngaha"
-          />
-        </p>
+      </p>
+
+      <p className="mt-6 italic text-xs text-gray-500 dark:text-gray-300">
+        Muri runo rukino, harimwo amajambo{' '}
+        <span className="font-bold">{WORDS.concat(VALID_GUESSES).length}</span>{' '}
+        gusa.
+      </p>
+
+      <p className="mt-4 italic text-xs text-gray-500 dark:text-gray-300">
+        <span className="font-bold">Ijambo</span> ryinyegeje ni rimwe umunsi
+        wose. Rihinduka isaha 12 zo mw'ijoro.
+      </p>
+      <p className="mt-4 italic text-xs text-gray-500 dark:text-gray-300">
+        Abafashije gutegura runo rukino bari{' '}
+        <Link
+          href="https://github.com/lionel-k/react-wordle#contributors"
+          className="underline font-bold"
+          text="hano"
+        />
+      </p>
+      <p className="mt-4 italic text-xs text-gray-500 dark:text-gray-300">
+        Code yamfashije gukora runo rukino{' '}
+        <Link
+          href="https://github.com/cwackerfuss/react-wordle"
+          className="underline font-bold"
+          text="yirabe ngaha"
+        />
       </p>
     </BaseModal>
   )
