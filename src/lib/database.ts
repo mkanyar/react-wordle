@@ -37,7 +37,7 @@ export const saveGameStateToDatabase = (won: boolean) => {
     solution: game && game.solution,
     start_time: startTime,
     time_taken: timeTaken,
-    won: won,
+    won,
   } as CompletedGamePayload
 
   axios.get(COUNTRY_ENDPOINT).then(({ data: { country_name, timezone } }) => {

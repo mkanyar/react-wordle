@@ -73,6 +73,7 @@ function App() {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       localStorage.removeItem('saved')
+      localStorage.setItem('startTime', new Date().toISOString())
       localStorage.removeItem('gameScore')
       return []
     }
@@ -86,6 +87,11 @@ function App() {
         persist: true,
       })
     }
+
+    if (!localStorage.getItem('startTime')) {
+      localStorage.setItem('startTime', new Date().toISOString())
+    }
+
     return loaded.guesses
   })
 
