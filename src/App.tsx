@@ -87,11 +87,9 @@ function App() {
         persist: true,
       })
     }
-
     if (!localStorage.getItem('startTime')) {
       localStorage.setItem('startTime', new Date().toISOString())
     }
-
     return loaded.guesses
   })
 
