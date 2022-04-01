@@ -6,6 +6,7 @@ export const WIN_MESSAGES = [
   'Neza cane 👍🏾 !',
   'Uri incambwenge 👍🏾 !',
   'Urarigemye 👍🏾 !',
+  "Ukwiye umudari w'inzahabu 👍🏾 !",
 ]
 export const GAME_COPIED_MESSAGE = 'Urukino rwakoporowe'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Indome ntizikwiye'

@@ -69,11 +69,13 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
+  const [attemptsAt, setAttemptsAt] = useState<Array<string>>([])
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       localStorage.removeItem('saved')
-      localStorage.setItem('startTime', new Date().toISOString())
+      localStorage.removeItem('gameScore')
+      setAttemptsAt([])
       return []
     }
     const gameWasWon = loaded.guesses.includes(solution)
@@ -86,9 +88,7 @@ function App() {
         persist: true,
       })
     }
-    if (!localStorage.getItem('startTime')) {
-      localStorage.setItem('startTime', new Date().toISOString())
-    }
+    setAttemptsAt(loaded.attemptsAt)
     return loaded.guesses
   })
 
@@ -148,8 +148,8 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
-  }, [guesses])
+    saveGameStateToLocalStorage({ guesses, solution, attemptsAt })
+  }, [guesses, attemptsAt])
 
   useEffect(() => {
     if (isGameWon) {
@@ -162,7 +162,7 @@ function App() {
         onClose: () => setIsStatsModalOpen(true),
       })
       const isWin = true
-      saveGameStateToDatabase(isWin)
+      saveGameStateToDatabase(isWin, attemptsAt)
     }
 
     if (isGameLost) {
@@ -170,7 +170,7 @@ function App() {
         setIsStatsModalOpen(true)
       }, GAME_LOST_INFO_DELAY)
       const isWin = false
-      saveGameStateToDatabase(isWin)
+      saveGameStateToDatabase(isWin, attemptsAt)
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
@@ -243,6 +243,7 @@ function App() {
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
+      setAttemptsAt([...attemptsAt, new Date().toISOString()])
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
 

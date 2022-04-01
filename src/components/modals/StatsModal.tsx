@@ -1,5 +1,6 @@
 import Countdown from 'react-countdown'
 import { StatBar } from '../stats/StatBar'
+import { RankingBar, RankingStats } from '../stats/RankingBar'
 import { Histogram } from '../stats/Histogram'
 import { GameStats } from '../../lib/localStorage'
 import { shareStatus } from '../../lib/share'
@@ -51,6 +52,18 @@ export const StatsModal = ({
       </BaseModal>
     )
   }
+
+  const country = localStorage.getItem('country')
+  const gameScore = localStorage.getItem('gameScore')
+
+  const rankingStats = {
+    nationalRank: '2/123',
+    internationalRank: '34/567',
+    averageNationalScore: 34,
+    averageInternationalScore: 23,
+    country,
+  } as RankingStats
+
   return (
     <BaseModal
       title={STATISTICS_TITLE}
@@ -65,9 +78,16 @@ export const StatsModal = ({
         gameStats={gameStats}
         numberOfGuessesMade={numberOfGuessesMade}
       />
+      <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+        Ihiganwa mpuzamakungu
+      </h4>
+      <p className="text-m font-bold leading-5 text-gray-500 dark:text-gray-400">
+        Your score: {gameScore}
+      </p>
+      <RankingBar rankingStats={rankingStats} />
       {(isGameLost || isGameWon) && (
         <>
-          <p className="text-s leading-6 font-medium text-gray-900 dark:text-gray-100">
+          <p className="text-sm mt-4 leading-6 font-medium text-gray-900 dark:text-gray-100">
             {CORRECT_WORD_MESSAGE(solution)}
           </p>
           <div className="mt-5 sm:mt-6 columns-2 dark:text-white">
