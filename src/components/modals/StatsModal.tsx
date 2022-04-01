@@ -91,7 +91,7 @@ export const StatsModal = ({
             Ihiganwa mpuzamakungu
           </h4>
           <p className="text-m font-bold leading-5 text-gray-500 dark:text-gray-400">
-            Amanota yawe: {gameScore}
+            Amanota yawe y'ino munsi: {gameScore}
           </p>
           <RankingBar rankingStats={rankingStats} />
         </>
