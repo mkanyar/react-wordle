@@ -85,7 +85,7 @@ export const StatsModal = ({
         gameStats={gameStats}
         numberOfGuessesMade={numberOfGuessesMade}
       />
-      {isGameWon && (
+      {isGameWon && gameScore && (
         <>
           <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
             Ihiganwa mpuzamakungu
