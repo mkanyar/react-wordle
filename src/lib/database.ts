@@ -20,14 +20,11 @@ type CompletedGamePayload = {
   won: boolean
 }
 
-export const saveGameStateToDatabase = (
-  won: boolean,
-  attemptsAt: string[] = []
-) => {
+export const saveGameStateToDatabase = (won: boolean) => {
   if (localStorage.getItem('saved')) return
-  if (attemptsAt.length === 0) return
 
   const game = loadGameStateFromLocalStorage()
+  const attemptsAt = (game && game.attemptsAt) || []
   const startTime = new Date(attemptsAt[0])
   const endTime = new Date(attemptsAt[attemptsAt.length - 1])
   const guesses = (game && game.guesses) || []

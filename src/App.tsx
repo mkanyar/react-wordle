@@ -148,6 +148,7 @@ function App() {
   }
 
   useEffect(() => {
+    if (attemptsAt.length > guesses.length) return
     saveGameStateToLocalStorage({ guesses, solution, attemptsAt })
   }, [guesses, attemptsAt])
 
@@ -162,7 +163,7 @@ function App() {
         onClose: () => setIsStatsModalOpen(true),
       })
       const isWin = true
-      saveGameStateToDatabase(isWin, attemptsAt)
+      saveGameStateToDatabase(isWin)
     }
 
     if (isGameLost) {
@@ -170,7 +171,7 @@ function App() {
         setIsStatsModalOpen(true)
       }, GAME_LOST_INFO_DELAY)
       const isWin = false
-      saveGameStateToDatabase(isWin, attemptsAt)
+      saveGameStateToDatabase(isWin)
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
