@@ -69,13 +69,13 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
-  const [attemptsAt, setAttemptsAt] = useState<Array<string>>([])
+  const [attemptsAt, setAttemptsAt] = useState<string[]>([])
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       localStorage.removeItem('saved')
       localStorage.removeItem('gameScore')
-      setAttemptsAt([])
+      // setAttemptsAt([])
       return []
     }
     const gameWasWon = loaded.guesses.includes(solution)
@@ -88,7 +88,7 @@ function App() {
         persist: true,
       })
     }
-    setAttemptsAt(loaded.attemptsAt)
+    // setAttemptsAt(loaded.attemptsAt)
     return loaded.guesses
   })
 
@@ -148,9 +148,9 @@ function App() {
   }
 
   useEffect(() => {
-    if (attemptsAt.length > guesses.length) return
-    saveGameStateToLocalStorage({ guesses, solution, attemptsAt })
-  }, [guesses, attemptsAt])
+    // if (attemptsAt.length > guesses.length) return
+    saveGameStateToLocalStorage({ guesses, solution })
+  }, [guesses])
 
   useEffect(() => {
     if (isGameWon) {
@@ -247,6 +247,7 @@ function App() {
       setAttemptsAt([...attemptsAt, new Date().toISOString()])
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
+      console.log(attemptsAt)
 
       if (winningWord) {
         vibrate(1000)
