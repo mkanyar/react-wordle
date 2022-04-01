@@ -8,14 +8,13 @@ import {
 import { loadGameStateFromLocalStorage } from './localStorage'
 
 type CompletedGamePayload = {
-  // attempts_at: string[]
   country: string
   end_time: Date
   guesses: string[]
-  // score: number
+  score: number
   solution: string
   start_time: Date
-  // time_taken: number
+  time_taken: number
   timezone: string
   won: boolean
 }
@@ -24,24 +23,20 @@ export const saveGameStateToDatabase = (won: boolean) => {
   if (localStorage.getItem('saved')) return
 
   const game = loadGameStateFromLocalStorage()
-  // const attemptsAt = (game && game.attemptsAt) || []
-  // const startTime = new Date(attemptsAt[0])
-  // const endTime = new Date(attemptsAt[attemptsAt.length - 1])
+  const startTime = new Date(localStorage.getItem('startTime') as string)
+  const endTime = new Date()
   const guesses = (game && game.guesses) || []
-  // const timeTaken = (endTime.getTime() - startTime.getTime()) / 1000
-  // const score = Math.round(100 - (guesses.length * timeTaken) / 100)
-  // localStorage.setItem('gameScore', score.toString())
+  const timeTaken = (endTime.getTime() - startTime.getTime()) / 1000
+  const score = Math.round(100 - (guesses.length * timeTaken) / 100)
+  localStorage.setItem('gameScore', score.toString())
 
   const completedGame = {
-    // attempts_at: attemptsAt,
-    // end_time: endTime,
-    end_time: new Date(),
+    end_time: endTime,
     guesses,
-    // score,
+    score,
     solution: game && game.solution,
-    // start_time: startTime,
-    start_time: new Date(),
-    // time_taken: timeTaken,
+    start_time: startTime,
+    time_taken: timeTaken,
     won: won,
   } as CompletedGamePayload
 
