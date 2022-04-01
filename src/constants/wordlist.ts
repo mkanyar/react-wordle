@@ -25,6 +25,7 @@ export const WORDS = [
   'ndaje',
   'ingwa',
   'kwiga',
+  'nyika',
   'hinge',
   'indya',
   'ntaco',
