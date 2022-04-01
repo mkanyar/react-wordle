@@ -16,22 +16,22 @@ export const RankingBar = ({ rankingStats }: Props) => {
   return (
     <div className="flex justify-center my-2">
       <StatItem
-        label={`classement (${rankingStats.country})`}
+        label={`Ikibanza (${rankingStats.country})`}
         value={rankingStats.nationalRank}
         valueTextSize="text-s"
       />
       <StatItem
-        label={`score moyen (${rankingStats.country})`}
+        label={`Amanota moyen y'igihugu (${rankingStats.country})`}
         value={rankingStats.averageNationalScore}
         valueTextSize="text-s"
       />
       <StatItem
-        label={'classement international'}
+        label={"Ikibanza kw'isi yose"}
         value={`${rankingStats.internationalRank}`}
         valueTextSize="text-s"
       />
       <StatItem
-        label={'score international moyen'}
+        label={"Amanota moyen kw'isi yose"}
         value={rankingStats.averageInternationalScore}
         valueTextSize="text-s"
       />

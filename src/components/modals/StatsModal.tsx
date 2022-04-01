@@ -53,8 +53,15 @@ export const StatsModal = ({
     )
   }
 
-  const country = localStorage.getItem('country')
+  const country = localStorage.getItem('country') || 'France'
+  if (!country) {
+    // get the country through COUNTRY_ENDPOINT endpoints
+    // and store it in localStorage
+  }
   const gameScore = localStorage.getItem('gameScore')
+  if (!gameScore) {
+    // return
+  }
 
   const rankingStats = {
     nationalRank: '2/123',
@@ -82,7 +89,7 @@ export const StatsModal = ({
         Ihiganwa mpuzamakungu
       </h4>
       <p className="text-m font-bold leading-5 text-gray-500 dark:text-gray-400">
-        Your score: {gameScore}
+        Amanota yawe: {gameScore}
       </p>
       <RankingBar rankingStats={rankingStats} />
       {(isGameLost || isGameWon) && (
