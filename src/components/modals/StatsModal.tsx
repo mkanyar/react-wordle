@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
 import Countdown from 'react-countdown'
 import { StatBar } from '../stats/StatBar'
 import { RankingBar, RankingStats } from '../stats/RankingBar'
@@ -41,6 +43,36 @@ export const StatsModal = ({
   isHighContrastMode,
   numberOfGuessesMade,
 }: Props) => {
+  const gameScore = localStorage.getItem('gameScore')
+  const country = localStorage.getItem('country')
+
+  const [rankingStats, setRankingStats] = useState<RankingStats>({
+    nationalRank: '/',
+    internationalRank: '/',
+    averageNationalScore: 0,
+    averageInternationalScore: 0,
+    country: country || '',
+  })
+
+  const getRankingStats = useCallback(async () => {
+    console.log('getRankingStats')
+    if (!gameScore || !country) return
+
+    const res = await axios.get('http://localhost:3001/api/v1/rankings', {
+      params: { score: gameScore, country },
+    })
+
+    const data = await res.data.args
+    setRankingStats(data as RankingStats)
+  }, [gameScore, country])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    console.log('useEffect')
+    getRankingStats()
+  }, [isOpen, getRankingStats])
+
   if (gameStats.totalGames <= 0) {
     return (
       <BaseModal
@@ -52,24 +84,6 @@ export const StatsModal = ({
       </BaseModal>
     )
   }
-
-  const country = localStorage.getItem('country') || 'France'
-  if (!country) {
-    // get the country through COUNTRY_ENDPOINT endpoints
-    // and store it in localStorage
-  }
-  const gameScore = localStorage.getItem('gameScore')
-  if (!gameScore) {
-    // return
-  }
-
-  const rankingStats = {
-    nationalRank: '2/123',
-    internationalRank: '34/567',
-    averageNationalScore: 34,
-    averageInternationalScore: 23,
-    country,
-  } as RankingStats
 
   return (
     <BaseModal
