@@ -201,6 +201,10 @@ function App() {
       return
     }
 
+    if (!localStorage.getItem('startTime')) {
+      localStorage.setItem('startTime', new Date().toISOString())
+    }
+
     if (!(unicodeLength(currentGuess) === MAX_WORD_LENGTH)) {
       setCurrentRowClass('jiggle')
       vibrate()
