@@ -57,11 +57,10 @@ export const StatsModal = ({
   })
 
   const getRankingStats = useCallback(async () => {
-    console.log('getRankingStats')
     if (!gameScore || !country) return
 
     const res = await axios.get(RANKINGS_ENDPOINT, {
-      params: { score: gameScore, country },
+      params: { score: gameScore, country, solution },
     })
 
     const data = await res.data
@@ -71,7 +70,6 @@ export const StatsModal = ({
   useEffect(() => {
     if (!isOpen) return
 
-    console.log('useEffect')
     getRankingStats()
   }, [isOpen, getRankingStats])
 
