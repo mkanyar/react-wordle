@@ -16,6 +16,8 @@ import {
   CORRECT_WORD_MESSAGE,
 } from '../../constants/strings'
 
+import { RANKINGS_ENDPOINT } from '../../constants/endpoints'
+
 type Props = {
   isOpen: boolean
   handleClose: () => void
@@ -47,10 +49,10 @@ export const StatsModal = ({
   const country = localStorage.getItem('country')
 
   const [rankingStats, setRankingStats] = useState<RankingStats>({
-    nationalRank: '/',
-    internationalRank: '/',
-    averageNationalScore: 0,
-    averageInternationalScore: 0,
+    national_rank: '/',
+    international_rank: '/',
+    average_national_score: 0,
+    average_international_score: 0,
     country: country || '',
   })
 
@@ -58,11 +60,11 @@ export const StatsModal = ({
     console.log('getRankingStats')
     if (!gameScore || !country) return
 
-    const res = await axios.get('http://localhost:3001/api/v1/rankings', {
+    const res = await axios.get(RANKINGS_ENDPOINT, {
       params: { score: gameScore, country },
     })
 
-    const data = await res.data.args
+    const data = await res.data
     setRankingStats(data as RankingStats)
   }, [gameScore, country])
 
@@ -107,7 +109,7 @@ export const StatsModal = ({
           <p className="text-m font-bold leading-5 text-gray-500 dark:text-gray-400">
             Amanota yawe y'ino munsi: {gameScore}
           </p>
-          <RankingBar rankingStats={rankingStats} />
+          {<RankingBar rankingStats={rankingStats} />}
         </>
       )}
       {isGameLost && (

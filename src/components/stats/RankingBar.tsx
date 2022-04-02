@@ -5,34 +5,42 @@ type Props = {
 }
 
 export type RankingStats = {
-  nationalRank: string
-  internationalRank: string
-  averageNationalScore: number
-  averageInternationalScore: number
+  national_rank: string
+  international_rank: string
+  average_national_score: number
+  average_international_score: number
   country: string
 }
 
-export const RankingBar = ({ rankingStats }: Props) => {
+export const RankingBar = ({
+  rankingStats: {
+    average_international_score,
+    average_national_score,
+    country,
+    international_rank,
+    national_rank,
+  },
+}: Props) => {
   return (
     <div className="flex justify-center my-2">
       <StatItem
-        label={`Ikibanza (${rankingStats.country})`}
-        value={rankingStats.nationalRank}
+        label={`Ikibanza (${country})`}
+        value={national_rank}
         valueTextSize="text-s"
       />
       <StatItem
-        label={`Amanota moyen y'igihugu (${rankingStats.country})`}
-        value={rankingStats.averageNationalScore}
+        label={`Amanota moyen y'igihugu (${country})`}
+        value={average_national_score}
         valueTextSize="text-s"
       />
       <StatItem
         label={"Ikibanza kw'isi yose"}
-        value={`${rankingStats.internationalRank}`}
+        value={`${international_rank}`}
         valueTextSize="text-s"
       />
       <StatItem
         label={"Amanota moyen kw'isi yose"}
-        value={rankingStats.averageInternationalScore}
+        value={average_international_score}
         valueTextSize="text-s"
       />
     </div>
