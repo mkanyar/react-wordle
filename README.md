@@ -54,3 +54,4 @@ Open [http://localhost](http://localhost) in browser.
 - [Isaac Nijimpaye](https://twitter.com/nijimpaye)
 - [Landry Gakuba](https://twitter.com/GakubaLandry)
 - [Miraiga](https://twitter.com/msmiraiga)
+- [Mike Stephane K.](https://twitter.com/mike_stephane)
